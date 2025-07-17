@@ -4,8 +4,10 @@
   "version": "0.0.2",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
+    "dev": "vite --mode development --host",
+    "build:dev": "vite build --mode development",
+    "build:staging": "vite build --mode staging",
+    "build:prod": "vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -28,8 +30,7 @@
     "react-toastify": "^10.0.6",
     "regenerator-runtime": "^0.14.1",
     "swiper": "^11.1.15",
-    "yup": "^1.4.0",
-    "vite-postcss-tools": "^0.0.2"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
