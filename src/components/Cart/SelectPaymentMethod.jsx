@@ -9,6 +9,7 @@ import { BASE_URL } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const SelectPaymentMethod = ({ onclick, count }) => {
   const [state, setState] = useState(false);
@@ -195,6 +196,11 @@ const AddPaymentMethod = ({ state, onclick }) => {
             fetchUserProfile();
             setAddCard(!addCard);
             onclick();
+            trackMetaPixel('AddPaymentInfo', {
+              value: 0, // replace with actual cart total variable
+              currency: 'USD',
+              user_id: user?._id || null,
+            }, user?.email);
           }
         } catch (error) {
           setConnectCard(false);

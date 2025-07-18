@@ -10,6 +10,7 @@ import SuccessModal from "../Global/SuccessModal";
 import { toast } from "react-toastify";
 import ButtonLoader from "../Global/ButtonLoader";
 import { db, doc, setDoc } from "../../firebase/firebase";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const validate = (values) => {
   const errors = {};

@@ -9,6 +9,7 @@ import {
   query,
   updateDoc,
 } from "../../firebase/firebase";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const ChatListCard = ({
   item,
@@ -19,6 +20,12 @@ const ChatListCard = ({
 }) => {
   const { user, setIsBlockedByUser, setHasBlocked } = useContext(AuthContext);
 ;
+  const handleStartChat = (selectedUser) => {
+    trackMetaPixel('Contact', {
+      seller_id: selectedUser?._id,
+      user_id: user?._id || null,
+    }, user?.email);
+  };
   return (
     <div
       onClick={async () => {

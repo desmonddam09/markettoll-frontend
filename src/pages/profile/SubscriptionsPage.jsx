@@ -11,6 +11,7 @@ import { useStripe, Elements } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
 import { IoClose } from "react-icons/io5";
 import ButtonLoader from "../../components/Global/ButtonLoader";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const stripePromise = loadStripe(
   "pk_test_51OsZBgRuyqVfnlHK0Z5w3pTL7ncHPcC75EwkxqQX9BAlmcXeKappekueIzmpWzWYK9L9HEGH3Y2Py2hC7KyVY0Al00przQczPf"
@@ -84,6 +85,13 @@ const PackageCard = ({
       );
       console.log(`FreePlan Subscription Success:`, response.data);
       if (response.data.success) {
+        // Track Subscribe event for free plan
+        trackMetaPixel('Subscribe', {
+          value: 0,
+          currency: 'USD',
+          subscription_id: 'free',
+          user_id: user?._id || null,
+        });
         navigate("/profile-setup");
       }
     } catch (error) {
@@ -130,6 +138,13 @@ const PackageCard = ({
           );
           // console.log("handle Subscription (No Plan) res >>>>>", res);
           if (res?.status === 201) {
+            // Track Subscribe event for paid plan
+            trackMetaPixel('Subscribe', {
+              value: title,
+              currency: 'USD',
+              subscription_id: planType,
+              user_id: user?._id || null,
+            });
             fetchUserProfile();
             handleCloseModal();
             toast.success(res?.data?.message);
@@ -165,6 +180,13 @@ const PackageCard = ({
               );
               console.log("handle Upgrade subscription res >>>>>", res);
               if (res?.status === 201) {
+                // Track Subscribe event for paid plan after upgrade
+                trackMetaPixel('Subscribe', {
+                  value: title,
+                  currency: 'USD',
+                  subscription_id: planType,
+                  user_id: user?._id || null,
+                });
                 fetchUserProfile();
                 handleCloseModal();
               }

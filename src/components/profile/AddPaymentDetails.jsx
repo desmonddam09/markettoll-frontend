@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import ButtonLoader from "../Global/ButtonLoader";
 // import PlanPurchaseSuccessModal from "./PlanPurchaseSuccessModal";
 // import PostBoostedSuccessModal from "./PostBoostedSuccessModal";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const AddPaymentDetails = () => {
   const [addCard, setAddCard] = useState(false);
@@ -98,6 +99,12 @@ const AddPaymentDetails = () => {
               setAddCard(true);
               handleAddCardTrue();
               fetchUserProfile();
+              // Track AddPaymentInfo event
+              trackMetaPixel('AddPaymentInfo', {
+                value: 0, // or actual value if available
+                currency: 'USD',
+                user_id: user?._id || null,
+              });
             }
           } catch (error) {
             console.log("error while adding payment method id >>", error);
@@ -135,6 +142,13 @@ const AddPaymentDetails = () => {
       );
       console.log("subscribed successfully >>>", res);
       if (res?.status === 201) {
+        // Track Subscribe event for paid plan
+        trackMetaPixel('Subscribe', {
+          value: location?.state?.plan?.title || 0,
+          currency: 'USD',
+          subscription_id: location?.state?.plan?.planType || '',
+          user_id: user?._id || null,
+        });
         setShowInfoModal(true);
         fetchUserProfile();
       }

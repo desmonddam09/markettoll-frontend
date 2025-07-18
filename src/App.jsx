@@ -1,10 +1,15 @@
 import "./App.css";
 import AppRoutes from "./routes/AppRoutes";
 import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
+import { initMetaPixel } from "./utils/metaPixel";
 
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
   return (
     <>
       <AppRoutes />

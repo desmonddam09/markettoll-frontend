@@ -7,6 +7,7 @@ import { BASE_URL } from "../../api/api";
 import ButtonLoader from "../../components/Global/ButtonLoader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const SettingsAddCard = () => {
   const { user, userProfile, fetchUserProfile } = useContext(AuthContext);
@@ -73,6 +74,12 @@ const SettingsAddCard = () => {
               handleOpenForm();
               toast.success("Card added successfully");
               navigate(-1);
+              // Track AddPaymentInfo event
+              trackMetaPixel('AddPaymentInfo', {
+                value: 0, // or actual value if available
+                currency: 'USD',
+                user_id: user?._id || null,
+              });
             }
           } catch (error) {
             // console.log("error while adding payment method id >>", error);

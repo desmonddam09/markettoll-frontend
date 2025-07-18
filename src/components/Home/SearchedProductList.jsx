@@ -6,12 +6,16 @@ import { BASE_URL } from "../../api/api";
 import ProductCard from "../Global/ProductCard";
 import ServiceCard from "../Global/ServiceCard";
 import { toast } from "react-toastify";
+import { trackMetaPixel } from '../../utils/metaPixel';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 
 const SearchProductList = () => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchedService, setSearchedService] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -35,6 +39,11 @@ const SearchProductList = () => {
         );
         setSearchedService(serviceRes?.data?.data || []);
         setProducts(res.data?.data || []);
+        // Track search event
+        trackMetaPixel('Search', {
+          search_string: searchQuery,
+          user_id: user?._id || null,
+        }, user?.email);
         // console.log("searched products >>>", res?.data);
       } catch (error) {
         console.error("Error fetching products:", error);

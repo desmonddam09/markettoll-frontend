@@ -25,6 +25,7 @@ import { Thumbs } from "swiper/modules";
 import { CartProductContext } from "../../context/cartProductContext";
 import Loader from "../Global/Loader";
 import ButtonLoader from "../Global/ButtonLoader";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
@@ -82,6 +83,13 @@ const ProductDetails = () => {
       console.log("add to cart res >>>>>>", res);
       if (res.status == 201) {
         setAddToCart(true);
+        // Track AddToCart event
+        trackMetaPixel('AddToCart', {
+          content_ids: [productId],
+          value: product?.price,
+          currency: 'USD',
+          user_id: user?._id || null,
+        }, user?.email);
       }
       handleShowPopup();
     } catch (error) {
@@ -129,6 +137,17 @@ const ProductDetails = () => {
         product.images.find((image) => image.displayImage === true) ||
         product.images[0];
       setDisplayImage(defaultDisplayImage);
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (product && product._id) {
+      trackMetaPixel('ViewContent', {
+        content_ids: [product._id],
+        content_type: 'product',
+        user_id: user?._id || null,
+        // Add any other dynamic params as needed
+      }, user?.email);
     }
   }, [product]);
 
@@ -197,6 +216,13 @@ const ProductDetails = () => {
             },
           }
         );
+        // Track AddToWishlist event
+        if (res?.status == 201) {
+          trackMetaPixel('AddToWishlist', {
+            content_ids: [product?._id],
+            user_id: user?._id || null,
+          }, user?.email);
+        }
         // console.log("product added favorite >>>>>", res);
         if (res?.status == 201) {
           toast.success(res?.data?.message);

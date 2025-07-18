@@ -3,6 +3,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { CartProductContext } from "../../context/cartProductContext";
 import { AuthContext } from "../../context/authContext";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const OrderReview = ({
   onclick,
@@ -18,6 +19,16 @@ const OrderReview = ({
   const pickupProducts = cartProducts?.filter((p) => {
     return p?.fulfillmentMethod?.selfPickup == true;
   });
+
+  const handleInitiateCheckout = () => {
+    // ... existing code for starting checkout ...
+    trackMetaPixel('InitiateCheckout', {
+      value: cartTotal, // replace with actual cart total variable
+      currency: 'USD',
+      user_id: user?._id || null,
+    }, user?.email);
+    // ... existing code ...
+  }
 
   return (
     <div className="bg-white rounded-[20px] p-6 flex flex-col items-start gap-5">

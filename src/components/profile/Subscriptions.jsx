@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go";
 import { SUBSCRIPTION_PLANS } from "../../constants/subscriptions";
 import { AuthContext } from "../../context/authContext";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const Subscriptions = () => {
   return (
@@ -63,6 +64,13 @@ const PackageCard = ({
       );
       console.log(`FreePlan Subscription Success:`, response.data);
       if (response.data.success) {
+        // Track Subscribe event for free plan
+        trackMetaPixel('Subscribe', {
+          value: 0,
+          currency: 'USD',
+          subscription_id: 'free',
+          user_id: user?._id || null,
+        });
         navigate("/profile-setup");
       }
     } catch (error) {
@@ -80,6 +88,8 @@ const PackageCard = ({
       SubscribeFreePlan();
     } else {
       // Navigate to Payment Page for Paid Plans
+      // Track Subscribe event for paid plan navigation (optional, or track after payment success)
+      // You may want to track after payment is confirmed
       navigate("/subscriptions/add-payment-details", {
         state: {
           plan: {

@@ -10,6 +10,7 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../components/Global/ButtonLoader";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const AddPaymentPage = () => {
   const [addCard, setAddCard] = useState(false);
@@ -88,6 +89,12 @@ const AddPaymentPage = () => {
             // setShowSuccessModal(true);
             setAddCard(!addCard);
             fetchUserProfile();
+            // Track AddPaymentInfo event
+            trackMetaPixel('AddPaymentInfo', {
+              value: 0, // or actual value if available
+              currency: 'USD',
+              user_id: user?._id || null,
+            });
           }
           // setShowCard(!showCard);
         } catch (error) {
@@ -120,6 +127,13 @@ const AddPaymentPage = () => {
       );
       // console.log("subscription successfull >>", res?.data);
       if (res?.data?.success) {
+        // Track Subscribe event for paid plan
+        trackMetaPixel('Subscribe', {
+          value: plan?.title || 0,
+          currency: 'USD',
+          subscription_id: plan?.planType || '',
+          user_id: user?._id || null,
+        });
         setShowSuccessModal(true);
       }
     } catch (error) {

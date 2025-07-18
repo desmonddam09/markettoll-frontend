@@ -8,6 +8,7 @@ import { AuthContext } from "../../context/authContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ButtonLoader from "../Global/ButtonLoader";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const CartSummary = ({
   onclick,
@@ -59,6 +60,7 @@ const CartSummary = ({
             setIsOrderPlaced(!isOrderPlaced);
             setCartCount(0);
             // fetchCartProducts();
+            handlePurchaseSuccess();
           }
         } catch (error) {
           if (error?.response?.data?.message == "Not enough funds in wallet.") {
@@ -79,6 +81,15 @@ const CartSummary = ({
     setIsOrderPlaced(!isOrderPlaced);
     // navigate(`/`);
     navigate(`/order-details/${orderId}`, { state: { orderData } });
+  };
+
+  const handlePurchaseSuccess = () => {
+    trackMetaPixel('Purchase', {
+      value: totalAmount, // replace with actual order total variable
+      currency: 'USD',
+      order_id: orderId,
+      user_id: user?._id || null,
+    }, user?.email);
   };
 
   return (

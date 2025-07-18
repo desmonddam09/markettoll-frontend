@@ -5,6 +5,7 @@ import { BASE_URL } from "../../api/api";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { trackMetaPixel } from '../../utils/metaPixel';
 
 const PackageCard = ({
   index,
@@ -110,14 +111,3 @@ const PackageCard = ({
 };
 
 export default PackageCard;
-
-{
-  /* <Link
-        to={
-          index == 0 ? "/profile-setup" : "/subscriptions/add-payment-details"
-        }
-        className="blue-bg text-white font-bold text-center py-3.5 mt-5 rounded-[20px]"
-      >
-        Subscribe Now
-      </Link> */
-}
