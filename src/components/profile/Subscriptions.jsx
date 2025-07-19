@@ -68,9 +68,9 @@ const PackageCard = ({
         trackMetaPixel('Subscribe', {
           value: 0,
           currency: 'USD',
-          subscription_id: 'free',
-          user_id: user?._id || null,
-        });
+          subscription_type: planType || 'Free Plan',
+          subscriptin_duration: duration || 'month'
+        }, user?.email.value);
         navigate("/profile-setup");
       }
     } catch (error) {

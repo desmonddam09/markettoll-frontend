@@ -19,15 +19,19 @@ const AuthContextProvider = ({ children }) => {
   const user = userCookie ? JSON.parse(userCookie) : null;
 
   const fetchUserProfile = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/users/profile`, {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
-        },
-      });
-      setUserProfile(res?.data?.data);
-    } catch (error) {
-      // console.log("error while fetch user profile >>>", error);
+    if(user !== null) {
+      try {
+        const res = await axios.get(`${BASE_URL}/users/profile`, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        });
+        setUserProfile(res?.data?.data);
+      } catch (error) {
+        // console.log("error while fetch user profile >>>", error);
+      }
+    } else {
+      return 0;
     }
   };
 

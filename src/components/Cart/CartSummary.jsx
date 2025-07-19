@@ -88,7 +88,6 @@ const CartSummary = ({
       value: totalAmount, // replace with actual order total variable
       currency: 'USD',
       order_id: orderId,
-      user_id: user?._id || null,
     }, user?.email);
   };
 

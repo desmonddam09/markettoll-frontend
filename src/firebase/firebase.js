@@ -21,7 +21,6 @@ import {
 } from "firebase/firestore";
 import { getMessaging, getToken } from "firebase/messaging";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD8us3uTEnm7u43cqJHTVRCzaSHC2PzKNA",
   authDomain: "markettoll-12722.firebaseapp.com",
@@ -30,7 +29,7 @@ const firebaseConfig = {
   storageBucket: "markettoll-12722.firebasestorage.app",
   messagingSenderId: "415697624629",
   appId: "1:415697624629:web:bdb82c4ee69379c463db7c",
-  measurementId: "G-9BPJW8MKXF",
+  measurementId: "G-9BPJW8MKXF"
 };
 
 // Initialize Firebase

@@ -45,7 +45,7 @@ const LoginForm = () => {
       if (permission === "granted") {
         const fcmToken = await getToken(messaging, {
           vapidKey:
-            "BHduyiO2b203CE8_q-deJ6nzjawReezy16LF-1hi_CQKELLF-y4Jqnevt7wjhLZRPhnCiZ4SY1V8Co7GHfIfF-o",
+            "BKGaHhuqh_eiZAL-zfFX8S1sONZ3733G8-yIlchOxgUpayZmAF7RUQyCgN2Uoh3_ql1X55_IMiK0x9_fcFhcEOY",
         });
         // console.log("fcmToken >>>", fcmToken);
         setFcmToken(fcmToken);

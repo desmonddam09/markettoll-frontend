@@ -170,7 +170,7 @@ const SocialLogin = () => {
   };
 
   return (
-    <div class="w-full grid grid-cols-1 lg:grid-cols-3 gap-3">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-3">
       <button
         type="button"
         onClick={handleGoogleLogin}
@@ -215,7 +215,7 @@ const SocialLogin = () => {
               fill="currentColor"
               strokeWidth="0"
               viewBox="0 0 384 512"
-              class="text-xl"
+              className="text-xl"
               height="1em"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"

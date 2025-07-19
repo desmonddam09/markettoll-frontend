@@ -63,7 +63,6 @@ const ProductList = () => {
     const queryString = queryParams.length ? `?${queryParams.join("&")}` : "";
 
     setLoading(true);
-    console.log("queryString", currentAddress);
     try {
       const res = await axios.get(
         `${BASE_URL}/users/home-screen-products${queryString}`,
@@ -93,7 +92,6 @@ const ProductList = () => {
         `${BASE_URL}/users/home-screen-services?page=${page}`,
         options
       );
-      console.log("services res >>>", res?.data?.data);
       setServices(res?.data?.data);
     } catch (error) {
       console.log("services error >>>>", error);
@@ -181,7 +179,6 @@ const ProductList = () => {
       );
       setLoading(false);
       setFilterModal(false);
-      console.log(res.data.data, "response");
       setProducts(res?.data?.data);
       setFilteredProducts(res?.data?.data);
     } catch (error) {
@@ -193,7 +190,6 @@ const ProductList = () => {
 
   useEffect(() => {
     handleSearchProduct();
-    console.log(searchQuery, "searchQuery");
     if (searchQuery == "") {
       fetchProducts();
     }
@@ -206,7 +202,6 @@ const ProductList = () => {
   if (loading) {
     return <Loader />;
   }
-  console.log("dsfsfs _services", services);
   return (
     <div className="w-full min-h-[70vh]">
       <div className="w-full flex items-center justify-between mt-6">
@@ -237,61 +232,6 @@ const ProductList = () => {
                 </button>
               );
             })}
-            {/* <button
-              type="button"
-              onClick={() => filterProducts("Electronics")}
-              className={`${
-                productCategory === "Electronics"
-                  ? "blue-bg text-white"
-                  : "bg-[#F7F7F7] text-black"
-              } text-[13px] font-medium rounded-lg px-3 py-2`}
-            >
-              Electronics
-            </button>
-            <button
-              type="button"
-              onClick={() => filterProducts("Home Appliances")}
-              className={`${
-                productCategory == "Home Appliances"
-                  ? "blue-bg text-white"
-                  : "bg-[#F7F7F7] text-black"
-              } text-[13px] font-medium rounded-lg px-3 py-2`}
-            >
-              Home Appliances
-            </button>
-            <button
-              type="button"
-              onClick={() => filterProducts("Home & Furniture")}
-              className={`${
-                productCategory == "Home & Furniture"
-                  ? "blue-bg text-white"
-                  : "bg-[#F7F7F7] text-black"
-              } text-[13px] font-medium rounded-lg px-3 py-2`}
-            >
-              Home Decor & Interiors
-            </button>
-            <button
-              type="button"
-              onClick={() => filterProducts("Phone & Tablet")}
-              className={`${
-                productCategory == "Phone & Tablet"
-                  ? "blue-bg text-white"
-                  : "bg-[#F7F7F7] text-black"
-              } text-[13px] font-medium rounded-lg px-3 py-2`}
-            >
-              Phone & Tablet
-            </button>
-            <button
-              type="button"
-              onClick={() => filterProducts("Fashion")}
-              className={`${
-                productCategory == "Fashion"
-                  ? "blue-bg text-white"
-                  : "bg-[#F7F7F7] text-black"
-              } text-[13px] font-medium rounded-lg px-3 py-2`}
-            >
-              Clothing
-            </button> */}
             <Link
               to={`/home/categories/${categories[0]?.name}`}
               className={`bg-[#F7F7F7] text-black text-[13px] font-medium rounded-lg px-3 py-2`}

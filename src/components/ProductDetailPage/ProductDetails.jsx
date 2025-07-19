@@ -88,7 +88,6 @@ const ProductDetails = () => {
           content_ids: [productId],
           value: product?.price,
           currency: 'USD',
-          user_id: user?._id || null,
         }, user?.email);
       }
       handleShowPopup();
@@ -144,6 +143,7 @@ const ProductDetails = () => {
     if (product && product._id) {
       trackMetaPixel('ViewContent', {
         content_ids: [product._id],
+        content_name: [product.name],
         content_type: 'product',
         user_id: user?._id || null,
         // Add any other dynamic params as needed
@@ -220,6 +220,7 @@ const ProductDetails = () => {
         if (res?.status == 201) {
           trackMetaPixel('AddToWishlist', {
             content_ids: [product?._id],
+            content_name: [product?.name],
             user_id: user?._id || null,
           }, user?.email);
         }

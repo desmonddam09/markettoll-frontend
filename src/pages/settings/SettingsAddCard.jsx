@@ -76,10 +76,9 @@ const SettingsAddCard = () => {
               navigate(-1);
               // Track AddPaymentInfo event
               trackMetaPixel('AddPaymentInfo', {
-                value: 0, // or actual value if available
                 currency: 'USD',
-                user_id: user?._id || null,
-              });
+                brand: response?.data?.data?.stripeCustomer?.paymentMethod?.brand || null,
+              }, user?.email.value);
             }
           } catch (error) {
             // console.log("error while adding payment method id >>", error);

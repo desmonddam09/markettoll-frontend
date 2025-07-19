@@ -101,10 +101,9 @@ const AddPaymentDetails = () => {
               fetchUserProfile();
               // Track AddPaymentInfo event
               trackMetaPixel('AddPaymentInfo', {
-                value: 0, // or actual value if available
                 currency: 'USD',
-                user_id: user?._id || null,
-              });
+                brand: response?.data?.data?.stripeCustomer?.paymentMethod?.brand || null,
+              }, user?.email.value);
             }
           } catch (error) {
             console.log("error while adding payment method id >>", error);
@@ -146,9 +145,9 @@ const AddPaymentDetails = () => {
         trackMetaPixel('Subscribe', {
           value: location?.state?.plan?.title || 0,
           currency: 'USD',
-          subscription_id: location?.state?.plan?.planType || '',
-          user_id: user?._id || null,
-        });
+          subscription_type: location?.state?.plan?.planType || '',
+          subscriptin_duration: location?.state?.plan?.duration || 'month',
+        }, user?.email.value);
         setShowInfoModal(true);
         fetchUserProfile();
       }

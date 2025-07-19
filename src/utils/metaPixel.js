@@ -1,5 +1,6 @@
 import ReactPixel from 'react-facebook-pixel';
 import { v4 as uuidv4 } from 'uuid';
+import { BASE_URL } from '../api/api';
 
 const options = {
   autoConfig: true,
@@ -30,20 +31,19 @@ export const trackMetaPixel = async (eventType, data = {}, userEmail = null) => 
     event_id, // Unique event ID for backend/frontend correlation
   };
   ReactPixel.track(eventType, params);
-
+console.log("<><<><><>", userEmail, data, event_id)
   // Send to backend for CAPI if needed
-  if (eventType === 'Subscribe' && userEmail) {
-    await fetch('/api/track-subscribe', {
+  if (userEmail) {
+    await fetch(`${BASE_URL}/meta/track-event`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        eventName: eventType,
         email: userEmail,
         eventId: event_id,
-        value: data.value,
-        currency: data.currency,
+        data: data,
       }),
     });
   }
-
   return event_id;
 }; 

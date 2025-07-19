@@ -7,6 +7,7 @@ import { BASE_URL } from "../../api/api";
 import { toast } from "react-toastify";
 import { IoClose } from "react-icons/io5";
 import ButtonLoader from "../Global/ButtonLoader";
+import { trackMetaPixel } from "../../utils/metaPixel";
 
 const ServiceBoostPackageCard = ({
   index,
@@ -64,6 +65,12 @@ const ServiceBoostPackageCard = ({
         );
         console.log("servide boost res >>>", res);
         if (res?.status == 201) {
+          trackMetaPixel(`Boost ${location?.state?.type}`, {
+            value: title,
+            currency: 'USD',
+            subscription_type: boostName,
+            subscriptin_duration: duration
+          }, user?.email.value);
           setShowPlanModal(true);
           setTimeout(() => {
             setShowPlanModal(false);
@@ -77,6 +84,7 @@ const ServiceBoostPackageCard = ({
         setLoading(false);
       }
       if (location?.state?.from === "/my-listings") {
+        URL = `${BASE_URL}/stripe/product-boost-paid-plan-stripe/${location?.state?.id}`
         try {
           const res = await axios.post(
             URL,
@@ -91,6 +99,12 @@ const ServiceBoostPackageCard = ({
           );
           console.log("servide boost res >>>", res);
           if (res?.status == 201) {
+            trackMetaPixel(`Boost Product`, {
+              value: title,
+              currency: 'USD',
+              subscription_type: boostName,
+              subscriptin_duration: duration
+            }, user?.email.value);
             setShowPlanModal(true);
             setTimeout(() => {
               setShowPlanModal(false);

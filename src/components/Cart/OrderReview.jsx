@@ -20,16 +20,6 @@ const OrderReview = ({
     return p?.fulfillmentMethod?.selfPickup == true;
   });
 
-  const handleInitiateCheckout = () => {
-    // ... existing code for starting checkout ...
-    trackMetaPixel('InitiateCheckout', {
-      value: cartTotal, // replace with actual cart total variable
-      currency: 'USD',
-      user_id: user?._id || null,
-    }, user?.email);
-    // ... existing code ...
-  }
-
   return (
     <div className="bg-white rounded-[20px] p-6 flex flex-col items-start gap-5">
       <div>

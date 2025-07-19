@@ -77,20 +77,25 @@ const Navbar = () => {
   };
 
   const fetchNotifications = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/users/notifications?page=1`, {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
-        },
-      });
-      // console.log("notifications >>>", res?.data?.data?.notifications);
-      setNotifications(res?.data?.data?.notifications);
-    } catch (error) {
-      // console.log(
-      //   "error while fetching notifications >>>",
-      //   error?.response?.data
-      // );
+    if(user !== null) {
+      try {
+        const res = await axios.get(`${BASE_URL}/users/notifications?page=1`, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        });
+        // console.log("notifications >>>", res?.data?.data?.notifications);
+        setNotifications(res?.data?.data?.notifications);
+      } catch (error) {
+        console.log(
+          "error while fetching notifications >>>",
+          error?.response?.data
+        );
+      }
+    } else {
+      return 0;
     }
+    
   };
 
   const handleSearchProduct = async (e) => {

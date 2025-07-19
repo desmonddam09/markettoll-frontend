@@ -8,7 +8,7 @@ const ProfilePicture = ({ image, setImage }) => {
           htmlFor="dropzone-file"
           className="flex flex-col items-center justify-center w-[150px] h-[150px] border-2 border-gray-400 border-dashed rounded-full cursor-pointer bg-white hover:bg-gray-100"
         >
-          <div class="flex flex-col items-center justify-center w-full h-full rounded-full">
+          <div className="flex flex-col items-center justify-center w-full h-full rounded-full">
             {image ? (
               <img
                 src={URL.createObjectURL(image)}

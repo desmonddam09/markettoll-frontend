@@ -87,14 +87,14 @@ const AddPaymentPage = () => {
           // console.log("subscription purchased >>>", response);
           if (response?.data?.success) {
             // setShowSuccessModal(true);
+            console.log("response, ds", response?.data)
             setAddCard(!addCard);
             fetchUserProfile();
             // Track AddPaymentInfo event
             trackMetaPixel('AddPaymentInfo', {
-              value: 0, // or actual value if available
               currency: 'USD',
-              user_id: user?._id || null,
-            });
+              brand: response?.data?.data?.stripeCustomer?.paymentMethod?.brand || null,
+            }, user?.email.value);
           }
           // setShowCard(!showCard);
         } catch (error) {
@@ -128,13 +128,13 @@ const AddPaymentPage = () => {
       // console.log("subscription successfull >>", res?.data);
       if (res?.data?.success) {
         // Track Subscribe event for paid plan
+        setShowSuccessModal(true);
         trackMetaPixel('Subscribe', {
           value: plan?.title || 0,
           currency: 'USD',
-          subscription_id: plan?.planType || '',
-          user_id: user?._id || null,
-        });
-        setShowSuccessModal(true);
+          subscription_type: plan?.planType || '',
+          subscriptin_duration: plan?.duration || ''
+        }, user?.email.value);
       }
     } catch (error) {
       // console.log("error while subscribing >>>", error);
@@ -282,7 +282,7 @@ const AddPaymentPage = () => {
                             userProfile?.stripeCustomer?.paymentMethod?.last4
                               ? userProfile?.stripeCustomer?.paymentMethod
                                   ?.last4
-                              : "1234"
+                              : "****"
                           }`}
                     </span>
                   </div>
@@ -292,7 +292,6 @@ const AddPaymentPage = () => {
 
               <button
                 type="button"
-                // disabled={!showCard || isProcessing}
                 onClick={handleSubscribePlan}
                 className="py-3 px-10 rounded-full w-full blue-bg text-white font-bold text-base"
               >
@@ -326,30 +325,3 @@ const AddPaymentPage = () => {
 };
 
 export default AddPaymentPage;
-
-const PostBoostedSuccessModal = ({ onclick }) => {
-  return (
-    <div
-      className={`w-full h-screen fixed inset-0 z-50 bg-[rgba(0,0,0,0.5)] flex items-center justify-center padding-x`}
-    >
-      <div className="w-full bg-white lg:w-[440px] h-[244px] rounded-[16px] flex flex-col items-center justify-center relative gap-2">
-        <button
-          type="button"
-          onClick={onclick}
-          className="w-[30px] h-[30px] bg-gray-200 absolute top-4 right-4 rounded-full p-1"
-        >
-          <IoClose className="w-full h-full" />
-        </button>
-        <div className="w-[69.67px] h-[69.67px] rounded-full blue-bg flex items-center justify-center p-3.5">
-          <FaCheck className="w-full h-full text-white" />
-        </div>
-        <span className="text-[20px] font-bold blue-text">
-          Congratulations, John Smith
-        </span>
-        <span className="text-base font-normal text-[#5C5C5C]">
-          Your've successfully subscribed to the plan 2.
-        </span>
-      </div>
-    </div>
-  );
-};

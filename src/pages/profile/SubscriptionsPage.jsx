@@ -87,11 +87,11 @@ const PackageCard = ({
       if (response.data.success) {
         // Track Subscribe event for free plan
         trackMetaPixel('Subscribe', {
-          value: 0,
+          value: title | 0,
           currency: 'USD',
-          subscription_id: 'free',
-          user_id: user?._id || null,
-        });
+          subscription_type: planType || 'Free Plan',
+          subscriptin_duration: duration || 'month'
+        }, user?.email.value);
         navigate("/profile-setup");
       }
     } catch (error) {
@@ -140,11 +140,11 @@ const PackageCard = ({
           if (res?.status === 201) {
             // Track Subscribe event for paid plan
             trackMetaPixel('Subscribe', {
-              value: title,
+              value: title | 0,
               currency: 'USD',
-              subscription_id: planType,
-              user_id: user?._id || null,
-            });
+              subscription_type: planType || 'Free Plan',
+              subscriptin_duration: duration || 'month'
+            }, user?.email.value);
             fetchUserProfile();
             handleCloseModal();
             toast.success(res?.data?.message);
@@ -182,11 +182,11 @@ const PackageCard = ({
               if (res?.status === 201) {
                 // Track Subscribe event for paid plan after upgrade
                 trackMetaPixel('Subscribe', {
-                  value: title,
+                  value: title | 0,
                   currency: 'USD',
-                  subscription_id: planType,
-                  user_id: user?._id || null,
-                });
+                  subscription_type: planType || 'Free Plan',
+                  subscriptin_duration: duration || 'month'
+                }, user?.email.value);
                 fetchUserProfile();
                 handleCloseModal();
               }

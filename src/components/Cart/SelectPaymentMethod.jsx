@@ -197,10 +197,9 @@ const AddPaymentMethod = ({ state, onclick }) => {
             setAddCard(!addCard);
             onclick();
             trackMetaPixel('AddPaymentInfo', {
-              value: 0, // replace with actual cart total variable
               currency: 'USD',
-              user_id: user?._id || null,
-            }, user?.email);
+              brand: response?.data?.data?.stripeCustomer?.paymentMethod?.brand || null,
+            }, user?.email.value);
           }
         } catch (error) {
           setConnectCard(false);

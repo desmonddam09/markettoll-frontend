@@ -22,6 +22,7 @@ const OnBoardingProfileReviewUpdate = () => {
   const handleEditPhoto = async () => {
     setLoading(true);
     const formData = new FormData();
+    console.log("dsfsfs", image);
     formData.append("profileImage", image);
     try {
       const response = await axios.put(
@@ -81,6 +82,7 @@ const OnBoardingProfileReviewUpdate = () => {
             </div>
             {/* Hidden input for file upload */}
             <input
+              // onChange={(e) => console.log(e.target.files[0])}
               onChange={(e) => setImage(e.target.files[0])}
               id="dropzone-file"
               type="file"

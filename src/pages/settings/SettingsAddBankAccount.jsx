@@ -73,6 +73,7 @@ const SettingsAddBankAccount = () => {
     },
     validate,
     onSubmit: async (values) => {
+      console.log("dsfsfsfs", values);
       setLoading(true);
       try {
         const res = await axios.post(
@@ -99,6 +100,11 @@ const SettingsAddBankAccount = () => {
         // console.log("bank account added >>>>", res);
         if (res.status == 201) {
           toast.success("Bank account added succesfully");
+          trackMetaPixel("AddBankInfo", {
+            account_type: 'Checking',
+            account_holder: 'Individual',
+            currency: 'USD',
+          }. user?.email)
           setState(false);
           fetchUserProfile();
           if (location?.state) {
