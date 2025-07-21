@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { BASE_URL } from "../../api/api";
 import ButtonLoader from "../../components/Global/ButtonLoader";
+import { trackMetaPixel } from "../../utils/metaPixel";
 
 const ProductReviewPage = () => {
   const navigate = useNavigate();

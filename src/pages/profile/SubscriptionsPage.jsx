@@ -184,12 +184,12 @@ const PackageCard = ({
                   value: title || 0,
                   currency: 'USD',
                   subscription_type: planType || 'Free Plan',
-                  subscriptin_duration: duration || 'month'
+                  subscriptin_duration: duration || '1 month'
                 }, user?.email.value);
                 await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
                   email: user?.email.value,
                   fullName: user?.name,
-                  subscribe_type: planType || 'Free Plan',
+                  subscribe_type: planType,
                   event: "paid-subscribe"
                 });
                 fetchUserProfile();
