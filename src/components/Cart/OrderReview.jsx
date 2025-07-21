@@ -3,7 +3,6 @@ import { GoArrowLeft } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { CartProductContext } from "../../context/cartProductContext";
 import { AuthContext } from "../../context/authContext";
-import { trackMetaPixel } from '../../utils/metaPixel';
 
 const OrderReview = ({
   onclick,

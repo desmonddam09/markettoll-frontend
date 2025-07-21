@@ -77,6 +77,10 @@ const ProductReviewPage = () => {
       // Handle success
       // console.log("Product uploaded successfully:", response.data);
       toast.success(response.data.message);
+      trackMetaPixel('AddProduct', {
+        product_name: state?.productData?.productName,
+        price: state?.productData?.price,
+      }, user?.email.value);
       navigate("/would-you-boost-your-product", {
         state: {
           from: window.location.href,

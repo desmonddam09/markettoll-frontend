@@ -88,7 +88,7 @@ const ProductDetails = () => {
           content_ids: [productId],
           value: product?.price,
           currency: 'USD',
-        }, user?.email);
+        }, user?.email.value);
       }
       handleShowPopup();
     } catch (error) {
@@ -147,7 +147,7 @@ const ProductDetails = () => {
         content_type: 'product',
         user_id: user?._id || null,
         // Add any other dynamic params as needed
-      }, user?.email);
+      }, user?.email.value);
     }
   }, [product]);
 
@@ -222,7 +222,7 @@ const ProductDetails = () => {
             content_ids: [product?._id],
             content_name: [product?.name],
             user_id: user?._id || null,
-          }, user?.email);
+          }, user?.email.value);
         }
         // console.log("product added favorite >>>>>", res);
         if (res?.status == 201) {

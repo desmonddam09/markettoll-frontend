@@ -7,7 +7,7 @@ import axios from "axios";
 import { BASE_URL } from "../../api/api";
 import ButtonLoader from "../../components/Global/ButtonLoader";
 import { useNavigate } from "react-router-dom";
-
+import { trackMetaPixel } from "../../utils/metaPixel";
 const validate = (values) => {
   const errors = {};
   if (!values.accountNumber) {
@@ -104,7 +104,12 @@ const SettingsAddBankAccount = () => {
             account_type: 'Checking',
             account_holder: 'Individual',
             currency: 'USD',
-          }. user?.email)
+          }, user?.email.value);
+          await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
+            email: user?.email.value,
+            fullName: user?.name,
+            event: "bank_linked"
+          });
           setState(false);
           fetchUserProfile();
           if (location?.state) {

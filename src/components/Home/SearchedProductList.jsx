@@ -43,7 +43,7 @@ const SearchProductList = () => {
         trackMetaPixel('Search', {
           search_string: searchQuery,
           user_id: user?._id || null,
-        }, user?.email);
+        }, user?.email.value);
         // console.log("searched products >>>", res?.data);
       } catch (error) {
         console.error("Error fetching products:", error);

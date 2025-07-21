@@ -13,9 +13,8 @@ import { IoClose } from "react-icons/io5";
 import ButtonLoader from "../../components/Global/ButtonLoader";
 import { trackMetaPixel } from '../../utils/metaPixel';
 
-const stripePromise = loadStripe(
-  "pk_test_51OsZBgRuyqVfnlHK0Z5w3pTL7ncHPcC75EwkxqQX9BAlmcXeKappekueIzmpWzWYK9L9HEGH3Y2Py2hC7KyVY0Al00przQczPf"
-);
+const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
+
 
 const SubscriptionsPage = () => {
   return (
@@ -140,7 +139,7 @@ const PackageCard = ({
           if (res?.status === 201) {
             // Track Subscribe event for paid plan
             trackMetaPixel('Subscribe', {
-              value: title | 0,
+              value: title || 0,
               currency: 'USD',
               subscription_type: planType || 'Free Plan',
               subscriptin_duration: duration || 'month'
@@ -182,11 +181,17 @@ const PackageCard = ({
               if (res?.status === 201) {
                 // Track Subscribe event for paid plan after upgrade
                 trackMetaPixel('Subscribe', {
-                  value: title | 0,
+                  value: title || 0,
                   currency: 'USD',
                   subscription_type: planType || 'Free Plan',
                   subscriptin_duration: duration || 'month'
                 }, user?.email.value);
+                await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
+                  email: user?.email.value,
+                  fullName: user?.name,
+                  subscribe_type: planType || 'Free Plan',
+                  event: "paid-subscribe"
+                });
                 fetchUserProfile();
                 handleCloseModal();
               }

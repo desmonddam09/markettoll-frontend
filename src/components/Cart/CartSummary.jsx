@@ -83,12 +83,18 @@ const CartSummary = ({
     navigate(`/order-details/${orderId}`, { state: { orderData } });
   };
 
-  const handlePurchaseSuccess = () => {
+  const handlePurchaseSuccess = async () => {
     trackMetaPixel('Purchase', {
       value: totalAmount, // replace with actual order total variable
       currency: 'USD',
       order_id: orderId,
-    }, user?.email);
+    }, user?.email.value);
+    await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
+      email: user?.email.value,
+      fullName: user?.name,
+      event: "order_purchased",
+      orderId: orderId 
+    });
   };
 
   return (

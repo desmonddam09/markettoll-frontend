@@ -13,9 +13,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { CartProductContext } from "../../context/cartProductContext";
 import { Link, useNavigate } from "react-router-dom";
 
-const stripePromise = loadStripe(
-  "pk_test_51OsZBgRuyqVfnlHK0Z5w3pTL7ncHPcC75EwkxqQX9BAlmcXeKappekueIzmpWzWYK9L9HEGH3Y2Py2hC7KyVY0Al00przQczPf"
-);
+const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
+
 
 const CartPage = () => {
   const [count, setCount] = useState(0);

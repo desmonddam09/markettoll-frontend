@@ -200,6 +200,12 @@ const AddPaymentMethod = ({ state, onclick }) => {
               currency: 'USD',
               brand: response?.data?.data?.stripeCustomer?.paymentMethod?.brand || null,
             }, user?.email.value);
+            //automatic mailchimp for linking payment
+            await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
+              email: user?.email.value,
+              fullName: user?.name,
+              event: "card_linked"
+            });
           }
         } catch (error) {
           setConnectCard(false);

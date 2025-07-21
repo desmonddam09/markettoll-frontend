@@ -3,40 +3,62 @@ import { AuthContext } from "../../context/authContext";
 import axios from "axios";
 import { BASE_URL } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { trackMetaPixel } from "../../utils/metaPixel";
 
 const IdentityVerifiedPage = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   console.log(user);
-  const verifyIdentity = async () => {
-    try {
-      const res = await axios.put(
-        `${BASE_URL}/users/identity-verified`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        }
-      );
-      // Handle response here
-      console.log("Identity Verified:", user, res.data);
-      if (res.data.success && user?.role == "client") {
-        setTimeout(() => {
-          navigate("/subscriptions");
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          navigate("/affiliate");
-        }, 1000);
-      }
-    } catch (error) {
-      console.error("Error verifying identity:", error);
-      // Optionally handle errors (e.g., show an alert to the user)
-    }
-  };
-
   useEffect(() => {
+    const verifyIdentity = async () => {
+      try {
+        const res = await axios.put(
+          `${BASE_URL}/users/identity-verified`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        );
+        // Handle response here
+        console.log("Identity Verified:", user, res.data);
+        if (res.data.success && user?.role == "client") {
+          trackMetaPixel('SignUp', {
+            name: user?.name,
+          }, user?.email.value);
+
+          const response = await axios.post(`${BASE_URL}/mailchimp/subscribe-on-signup`, 
+            {
+              email: user?.email.value,
+              name: user?.name,
+              tags: ['signed_up']
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          if(response.data.status == 200) {
+            await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
+              email: user?.email.value,
+              event: "signup"
+            });
+          }
+          setTimeout(() => {
+            navigate("/subscriptions");
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            navigate("/affiliate");
+          }, 1000);
+        }
+      } catch (error) {
+        console.error("Error verifying identity:", error);
+        // Optionally handle errors (e.g., show an alert to the user)
+      }
+    };
     verifyIdentity();
   }, []);
   return (

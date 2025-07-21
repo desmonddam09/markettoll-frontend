@@ -79,6 +79,12 @@ const SettingsAddCard = () => {
                 currency: 'USD',
                 brand: response?.data?.data?.stripeCustomer?.paymentMethod?.brand || null,
               }, user?.email.value);
+              
+              await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
+                email: user?.email.value,
+                fullName: user?.name,
+                event: "card_linked"
+              });
             }
           } catch (error) {
             // console.log("error while adding payment method id >>", error);

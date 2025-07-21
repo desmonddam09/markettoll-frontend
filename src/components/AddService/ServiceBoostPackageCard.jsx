@@ -68,8 +68,8 @@ const ServiceBoostPackageCard = ({
           trackMetaPixel(`Boost ${location?.state?.type}`, {
             value: title,
             currency: 'USD',
-            subscription_type: boostName,
-            subscriptin_duration: duration
+            boost_type: boostName,
+            boost_duration: duration
           }, user?.email.value);
           setShowPlanModal(true);
           setTimeout(() => {
