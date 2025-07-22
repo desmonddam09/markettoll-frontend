@@ -45,7 +45,7 @@ const IdentityVerifiedPage = () => {
               email: user?.email.value,
               event: "signup"
             },
-          {
+            {
               headers: {
                 Authorization: `Bearer ${user?.token}`,
               },
