@@ -45,6 +45,8 @@ const IdentityVerifiedPage = () => {
               email: user?.email.value,
               event: "signup"
             });
+          } else {
+            console.log(response?.error);
           }
           setTimeout(() => {
             navigate("/subscriptions");
