@@ -44,6 +44,11 @@ const IdentityVerifiedPage = () => {
             await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
               email: user?.email.value,
               event: "signup"
+            },
+          {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
             });
           } else {
             console.log(response?.error);
