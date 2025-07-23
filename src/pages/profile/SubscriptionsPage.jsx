@@ -190,7 +190,7 @@ const PackageCard = ({
                   email: user?.email.value,
                   fullName: user?.name,
                   subscribe_type: planType,
-                  event: "paid-subscribe"
+                  event: "paid_subscribe"
                 });
                 fetchUserProfile();
                 handleCloseModal();

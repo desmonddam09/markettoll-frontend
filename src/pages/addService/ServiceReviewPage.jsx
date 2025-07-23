@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/authContext";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../components/Global/ButtonLoader";
 import { GoArrowLeft } from "react-icons/go";
+import { trackMetaPixel } from "../../utils/metaPixel";
 
 const ServiceReviewPage = () => {
   const navigate = useNavigate();

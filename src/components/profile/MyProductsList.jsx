@@ -5,18 +5,18 @@ import { BASE_URL } from "../../api/api";
 import { AuthContext } from "../../context/authContext";
 import Loader from "../Global/Loader";
 
-const MyProductsList = ({ postType }) => {
+const MyProductsList = ({ postType, isApproved }) => {
   const [myProducts, setMyProducts] = useState([]);
   const { user } = useContext(AuthContext);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
   const fetchMyProducts = async () => {
     setLoading(true);
+    console.log(postType);
     try {
       const res = await axios.get(
-        postType === "post"
-          ? `${BASE_URL}/users/seller-products/${user?._id}?page=${page}`
+        postType === "Post"
+          ? `${BASE_URL}/users/seller-products/${user?._id}?approveStatus=${isApproved}&page=${page}`
           : `${BASE_URL}/users/products-boosted?page=${page}`,
         {
           headers: {
@@ -34,7 +34,7 @@ const MyProductsList = ({ postType }) => {
 
   useEffect(() => {
     fetchMyProducts();
-  }, [postType]);
+  }, [postType, isApproved]);
 
   if (loading) {
     return <Loader />;

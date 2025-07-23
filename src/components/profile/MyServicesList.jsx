@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { toast } from "react-toastify";
 
-const MyServicesList = ({ postType }) => {
+const MyServicesList = ({ postType, isApproved }) => {
   const [myServices, setMyServices] = useState([]);
   const { user, userProfile } = useContext(AuthContext);
   const [page, setPage] = useState(1);
@@ -55,7 +55,7 @@ const MyServicesList = ({ postType }) => {
     try {
       const res = await axios.get(
         postType === "Post"
-          ? `${BASE_URL}/users/seller-services/${user?._id}?page=${page}`
+          ? `${BASE_URL}/users/seller-services/${user?._id}?approveStatus=${isApproved}&page=${page}`
           : `${BASE_URL}/users/services-boosted?page=${page}`,
         {
           headers: {
@@ -75,7 +75,7 @@ const MyServicesList = ({ postType }) => {
 
   useEffect(() => {
     fetchMyServices();
-  }, [postType]);
+  }, [postType, isApproved]);
 
   if (loading) {
     return <Loader />;

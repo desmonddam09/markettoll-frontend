@@ -11,8 +11,10 @@ import MyProductsList from "./MyProductsList";
 const MyProductsAndServices = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [state, setState] = useState(false);
-  const [postType, setPostType] = useState("post");
+  const [isApproved, setIsApproved] = useState('approved');
+  const [postType, setPostType] = useState("Post");
   console.log("postType >>>", postType);
+  console.log("isApproved >>>", isApproved);
 
   const handleShowPopup = () => {
     setShowPopup(!showPopup);
@@ -36,7 +38,8 @@ const MyProductsAndServices = () => {
           />
         </button>
       </div>
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6 gap-5">
+        <div className="flex md:items-center md:flex-row flex-col gap-5">
         <div>
           <button
             type="button"
@@ -57,12 +60,43 @@ const MyProductsAndServices = () => {
             Services
           </button>
         </div>
+        { postType === 'Post' && <div>
+          <button
+            type="button"
+            onClick={() => setIsApproved('approved')}
+            className={`${
+              isApproved ==='approved' ? "blue-bg text-white" : "bg-[#F7F7F7] text-black"
+            } rounded-l-xl px-4 py-2.5 font-bold`}
+          >
+            Approved
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsApproved('rejected')}
+            className={`${
+              isApproved==='rejected' ? "blue-bg text-white" : "bg-[#F7F7F7] text-black"
+            } px-4 py-2.5 font-bold`}
+          >
+            Rejected
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsApproved('pending_review')}
+            className={`${
+              isApproved==='pending_review' ? "blue-bg text-white" : "bg-[#F7F7F7] text-black"
+            } rounded-r-xl px-4 py-2.5 font-bold`}
+          >
+            Pending Review
+          </button>
+        </div>
+        }
+        </div>
         <div>
           <select
             id="countries"
             value={postType}
             onChange={(e) => setPostType(e.target.value)}
-            className="bg-gray-50 border border-gray-300 !appearance-auto text-gray-900 text-sm rounded-lg block w-full p-2.5 outline-none"
+            className="bg-gray-50 border border-gray-300 !appearance-auto text-gray-900 text-sm rounded-lg block w-full p-2 outline-none"
           >
             <option defaultValue="post">Post</option>
             <option value="boosted">Boosted</option>
@@ -70,9 +104,9 @@ const MyProductsAndServices = () => {
         </div>
       </div>
       {state ? (
-        <MyServicesList postType={postType} />
+        <MyServicesList postType={postType} isApproved={isApproved}/>
       ) : (
-        <MyProductsList postType={postType} />
+        <MyProductsList postType={postType} isApproved={isApproved}/>
       )}
     </div>
   );

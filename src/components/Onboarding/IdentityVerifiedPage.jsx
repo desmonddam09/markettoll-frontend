@@ -43,7 +43,8 @@ const IdentityVerifiedPage = () => {
           if(response.status == 200) {
             await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
               email: user?.email.value,
-              event: "signup"
+              fullName: user?.name,
+              event: "signed_up"
             },
             {
               headers: {

@@ -146,6 +146,7 @@ const ProductList = () => {
       fetchServices();
     } else {
       setShowServices(false);
+      fetchProducts();
     }
   };
 
