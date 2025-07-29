@@ -151,7 +151,7 @@ const AddPaymentDetails = () => {
           value: location?.state?.plan?.title || 0,
           currency: 'USD',
           subscription_type: location?.state?.plan?.planType || '',
-          subscriptin_duration: location?.state?.plan?.duration || 'month',
+          subscription_duration: location?.state?.plan?.duration || 'month',
         }, user?.email.value);
         
         setShowInfoModal(true);

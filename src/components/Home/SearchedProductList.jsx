@@ -42,7 +42,6 @@ const SearchProductList = () => {
         // Track search event
         trackMetaPixel('Search', {
           search_string: searchQuery,
-          user_id: user?._id || null,
         }, user?.email.value);
         // console.log("searched products >>>", res?.data);
       } catch (error) {

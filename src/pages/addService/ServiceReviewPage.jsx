@@ -69,8 +69,9 @@ const ServiceReviewPage = () => {
         toast.success(response.data.message);
         localStorage.setItem("serviceId", JSON.stringify(response.data.data));
         trackMetaPixel('AddService', {
-          product_name: serviceData?.serviceName,
-          price: serviceData?.price,
+          content_name: serviceData?.serviceName,
+          value: serviceData?.price,
+          currency: 'USD',
         }, user?.email.value);
         navigate("/boost-service", {
           state: {

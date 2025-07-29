@@ -100,9 +100,9 @@ const SettingsAddBankAccount = () => {
         // console.log("bank account added >>>>", res);
         if (res.status == 201) {
           toast.success("Bank account added succesfully");
-          trackMetaPixel("AddBankInfo", {
+          trackMetaPixel('AddBankInfo', {
             account_type: 'Checking',
-            account_holder: 'Individual',
+            account_holder_type: 'Individual',
             currency: 'USD',
           }, user?.email.value);
           await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{

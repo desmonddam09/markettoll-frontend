@@ -24,9 +24,7 @@ const IdentityVerifiedPage = () => {
         // Handle response here
         console.log("Identity Verified:", user, res.data);
         if (res.data.success && user?.role == "client") {
-          trackMetaPixel('SignUp', {
-            name: user?.name,
-          }, user?.email.value);
+          trackMetaPixel('SignUp', {}, user?.email.value);
 
           const response = await axios.post(`${BASE_URL}/mailchimp/subscribe-on-signup`, 
             {

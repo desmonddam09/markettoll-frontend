@@ -86,8 +86,13 @@ const ProductDetails = () => {
         // Track AddToCart event
         trackMetaPixel('AddToCart', {
           content_ids: [productId],
-          value: product?.price,
           currency: 'USD',
+          value: product?.price,
+          contents: [{
+            id: productId,
+            quantity: 1,
+            item_price: product?.price
+          }]
         }, user?.email.value);
       }
       handleShowPopup();
@@ -142,11 +147,11 @@ const ProductDetails = () => {
   useEffect(() => {
     if (product && product._id) {
       trackMetaPixel('ViewContent', {
-        content_ids: [product._id],
-        content_name: [product.name],
+        content_ids: [product?._id],
+        content_name: product?.name,
         content_type: 'product',
-        user_id: user?._id || null,
-        // Add any other dynamic params as needed
+        currency: 'USD',
+        value: product?.price,
       }, user?.email.value);
     }
   }, [product]);
@@ -220,8 +225,7 @@ const ProductDetails = () => {
         if (res?.status == 201) {
           trackMetaPixel('AddToWishlist', {
             content_ids: [product?._id],
-            content_name: [product?.name],
-            user_id: user?._id || null,
+            content_name: product?.name,
           }, user?.email.value);
         }
         // console.log("product added favorite >>>>>", res);

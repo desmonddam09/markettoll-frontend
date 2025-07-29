@@ -69,7 +69,7 @@ const PackageCard = ({
           value: 0,
           currency: 'USD',
           subscription_type: planType || 'Free Plan',
-          subscriptin_duration: duration || 'month'
+          subscription_duration: duration || 'month',
         }, user?.email.value);
         navigate("/profile-setup");
       }

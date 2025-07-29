@@ -9,6 +9,7 @@ import axios from "axios";
 import { BASE_URL } from "../../api/api";
 import { toast } from "react-toastify";
 import { CartProductContext } from "../../context/cartProductContext";
+import ConnectEbay from "../../components/ebay/ConnectEbay";
 
 const HomePage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -55,6 +56,7 @@ const HomePage = () => {
           </span>{" "}
           <span>Let’s Shop!</span>
         </h2>
+        <ConnectEbay />
         <button
           type="button"
           onClick={() => handleOpenModal()}

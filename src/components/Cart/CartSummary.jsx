@@ -85,15 +85,21 @@ const CartSummary = ({
 
   const handlePurchaseSuccess = async () => {
     trackMetaPixel('Purchase', {
-      value: totalAmount, // replace with actual order total variable
+      value: totalAmount,
       currency: 'USD',
-      order_id: orderId,
+      contents: [{
+        id: orderId,
+        quantity: 1,
+        item_price: totalAmount
+      }]
     }, user?.email.value);
+    
     await axios.post(`${BASE_URL}/mailchimp/trigger-event`,{
       email: user?.email.value,
       fullName: user?.name,
-      event: "order_purchased",
-      orderId: orderId 
+      event: "purchase_complete",
+      orderId: orderId,
+      order_total: totalAmount 
     });
   };
 

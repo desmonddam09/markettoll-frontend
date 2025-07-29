@@ -69,7 +69,7 @@ const ServiceBoostPackageCard = ({
             value: title,
             currency: 'USD',
             boost_type: boostName,
-            boost_duration: duration
+            boost_duration: duration,
           }, user?.email.value);
           setShowPlanModal(true);
           setTimeout(() => {
@@ -99,7 +99,7 @@ const ServiceBoostPackageCard = ({
           );
           console.log("servide boost res >>>", res);
           if (res?.status == 201) {
-            trackMetaPixel(`Boost Product`, {
+            (`Boost Product`, {
               value: title,
               currency: 'USD',
               subscription_type: boostName,

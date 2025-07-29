@@ -12,7 +12,6 @@ import SettingsAddCard from "./SettingsAddCard";
 import SettingsAddBankAccount from "./SettingsAddBankAccount";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { trackMetaPixel } from "../../utils/metaPixel";
 
 const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
 
