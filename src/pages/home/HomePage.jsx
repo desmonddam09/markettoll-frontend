@@ -56,7 +56,6 @@ const HomePage = () => {
           </span>{" "}
           <span>Let’s Shop!</span>
         </h2>
-        <ConnectEbay />
         <button
           type="button"
           onClick={() => handleOpenModal()}
