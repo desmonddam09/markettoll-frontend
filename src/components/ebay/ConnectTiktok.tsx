@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BASE_URL } from '../../api/api';
 import { AuthContext } from '../../context/authContext';
 
-export default function ConnectEbay({handleConnectStore}) {
+export default function ConnectTiktok({handleConnectStore}) {
 
   const {user} = useContext(AuthContext);
 
@@ -19,7 +19,7 @@ export default function ConnectEbay({handleConnectStore}) {
 
   return (
     <button onClick={connect} className="blue-bg text-white px-4 py-2 rounded-xl w-2/3">
-      <span className='font-bold'>Connect <span className='text-[#ffff00] text-lg'>eBay</span> Store</span>
+      <span className='font-bold'>Connect <span className='text-[#ffff00] text-lg'>Tiktok Shop</span> Store</span>
     </button>
   );
 }

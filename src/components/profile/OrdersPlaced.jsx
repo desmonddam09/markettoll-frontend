@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PastOrderList from "./PastOrderList";
 import CurrentOrderList from "./CurrentOrderList";
 
@@ -8,6 +8,10 @@ const OrdersPlaced = () => {
   const handleOrderType = () => {
     setOrderType(!orderType);
   };
+
+  useEffect(() => {
+    
+  }, []);
   return (
     <div className="w-full">
       <div className="w-full flex items-center justify-start gap-2 mt-4">

@@ -5,11 +5,14 @@ import { BASE_URL } from "../../api/api";
 import { AuthContext } from "../../context/authContext";
 import Loader from "../Global/Loader";
 
-const MyProductsList = ({ postType, isApproved }) => {
+
+const MyProductsList = ({ postType, isApproved, eBayStore }) => {
   const [myProducts, setMyProducts] = useState([]);
   const { user } = useContext(AuthContext);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+
   const fetchMyProducts = async () => {
     setLoading(true);
     console.log(postType);
@@ -33,8 +36,18 @@ const MyProductsList = ({ postType, isApproved }) => {
   };
 
   useEffect(() => {
+    if(eBayStore) {
+      const response = axios.get(`${BASE_URL}/ebay/products`, 
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      console.log("ebay_result", response.data);
+    }
     fetchMyProducts();
-  }, [postType, isApproved]);
+  }, [postType, isApproved, eBayStore]);
 
   if (loading) {
     return <Loader />;
