@@ -13,7 +13,7 @@ const validate = (values) => {
     errors.accountNumber = "Required";
   } else if (
     values.accountNumber.length > 12 ||
-    values.accountNumber.length < 12
+    values.accountNumber.length < 18
   ) {
     errors.accountNumber = "Account number must be 12 digits";
   }
