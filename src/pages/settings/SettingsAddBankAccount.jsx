@@ -168,7 +168,7 @@ const SettingsAddBankAccount = () => {
               </label>
               <input
                 type="text"
-                maxLength={12}
+                maxLength={20}
                 id="accountNumber"
                 placeholder="Account Number"
                 className="border rounded-2xl px-4 py-2.5 outline-none w-full text-sm"
